@@ -1,19 +1,31 @@
+const lenis = new Lenis({
+    autoRaf: true,
+});
+
+function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+}
+
+gsap.ticker.lagSmoothing(0);
+requestAnimationFrame(raf);
 
 let currentScroll = 0;
 let isScrollingDown = true;
 let arrows = document.querySelectorAll(".arrow");
 
-let tween = gsap.to(".marquee__part", {
-    xPercent: -100,
-    repeat: -1,
-    duration: 5,
-    ease: "linear"
-}).totalProgress(0.5);
+let tween = gsap
+    .to(".marquee__part", {
+        xPercent: -100,
+        repeat: -1,
+        duration: 5,
+        ease: "linear",
+    })
+    .totalProgress(0.5);
 
 gsap.set(".marquee__inner", { xPercent: -50 });
 
-
-window.addEventListener('scroll', function () {
+window.addEventListener("scroll", function () {
     if (window.pageYOffset > currentScroll) {
         isScrollingDown = true;
     } else {
@@ -21,7 +33,7 @@ window.addEventListener('scroll', function () {
     }
 
     gsap.to(tween, {
-        timeScale: isScrollingDown ? 1 : -1
+        timeScale: isScrollingDown ? 1 : -1,
     });
 
     arrows.forEach((arrow) => {
@@ -34,18 +46,3 @@ window.addEventListener('scroll', function () {
 
     currentScroll = window.pageYOffset;
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
